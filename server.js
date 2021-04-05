@@ -2,7 +2,6 @@
 
 // Application Dependencies
 const express = require('express');
-// const { link } = require('node:fs');
 const superagent = require('superagent');
 
 // Application Setup
@@ -11,20 +10,15 @@ const PORT = process.env.PORT || 3001;
 
 // Application Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public/styles'));
+app.use(express.static('./public/styles'));
 app.use(errorHandler);
 // Set the view engine for server-side templating
 app.set('view engine', 'ejs');
 
 // API Routes
-// Renders the home page
-app.get('/', renderHomePage);
-
-// Renders the search form
-app.get('/searches/new', showForm);
-
-// Creates a new search to the Google Books API
-app.post('/searches', createSearch);
+app.get('/', renderHomePage);  // Renders the home page
+app.get('/searches/new', showForm);  // Renders the search form
+app.post('/searches', createSearch);// Creates a new search to the Google Books API
 
 // Catch-all
 app.get('*', (request, response) => response.status(404).send('This route does not exist'));
@@ -42,10 +36,11 @@ function errorHandler(err, req, res, next) {
 // HELPER FUNCTIONS
 // Only show part of this to get students started
 function Book(data) {
-    this.title = data.title;
-    this.author = data.authors;
-    this.description = data.description;
+    this.title = data.title || 'No title avelable';
+    this.author = data.authors.join(' ,') || 'No authors avelable';
+    this.description = data.description || 'No description avelable';
     this.image = (data.imageLinks) ? data.imageLinks.smallThumbnail : 'https://i.imgur.com/J5LVHEL.jpg';
+    console.log(this.description);
   }
 
 // Note that .ejs file extension is not required

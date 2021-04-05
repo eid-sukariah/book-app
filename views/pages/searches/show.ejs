@@ -13,10 +13,10 @@
   </nav>
     <main>
         <% searchResults.forEach( book => { %>
-            <h3 class="disc"><%= book.title %></h3>
             <img src="<%= book.image %>">
-            <h4 class="disc"><%book.author%></h4>
-            <p class="disc"><%book.description%></p>
+            <h3 class="disc"><%= book.title %></h3>
+            <h4 class="disc"><%= book.author%></h4>
+            <p class="disc"><%= book.description%></p>
 
         <% }) %>
     </main>
