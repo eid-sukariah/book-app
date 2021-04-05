@@ -2,19 +2,27 @@
 <html lang="en">
   <head>
     <title>Book Collection</title>
+    <link rel="stylesheet" href="/reset.css">
+    <link rel="stylesheet" href="/base.css">
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/modules.css">
   </head>
   <body>
+    <nav>
+      <h1>Best Books!</h1>
+  </nav>
     <main>
+      <section>
       <h4>Search by Title or Author</h4>
       <form action="/searches" method="post">
-        <input type="text" name="search" placeholder="Enter a title or author" required>
-        <fieldset>
+        <input class="search" type="text" name="search" placeholder="Enter a title or author" required>
+        <fieldset class="check">
           <label for="title">
             <span>Title</span>
             <input type="radio" name="search" value="title" required>
           </label>
         </fieldset>
-        <fieldset>
+        <fieldset class="check">
           <label for="author">
             <span>Author</span>
             <input type="radio" name="search" value="author" required>
@@ -22,6 +30,7 @@
         </fieldset>
         <button type="submit">Search the Google Books API</button>
       </form>
+    </section>
     </main>
   </body>
 </html>

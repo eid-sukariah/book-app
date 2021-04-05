@@ -1,22 +1,4 @@
-/* *{
+*{
     box-sizing: border-box;
     margin: 10px;
-   
 }
-h1{
-    color: rgb(255, 255, 255);
-}
-nav{
-    background-color: black;
-    height: 50px;
-}
-p{
-    background-color: gray;
-}
-body{
-    background-color: rgb(145, 175, 204);
-}
-button{
-    color: white;
-    background-color: black;
-} */

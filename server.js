@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001;
 
 // Application Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('public/styles'));
 app.use(errorHandler);
 // Set the view engine for server-side templating
 app.set('view engine', 'ejs');

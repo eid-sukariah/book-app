@@ -2,14 +2,21 @@
 <html lang="en">
   <head>
     <title>Book Collection</title>
+    <link rel="stylesheet" href="/reset.css">
+    <link rel="stylesheet" href="/base.css">
+    <link rel="stylesheet" href="/layout.css">
+    <link rel="stylesheet" href="/modules.css">
   </head>
   <body>
+    <nav>
+      <h1>Best Books!</h1>
+  </nav>
     <main>
         <% searchResults.forEach( book => { %>
-            <h3><%= book.title %></h3>
+            <h3 class="disc"><%= book.title %></h3>
             <img src="<%= book.image %>">
-            <h4><%book.author%></h4>
-            <p><%book.description%></p>
+            <h4 class="disc"><%book.author%></h4>
+            <p class="disc"><%book.description%></p>
 
         <% }) %>
     </main>
