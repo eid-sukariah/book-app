@@ -26,6 +26,7 @@ app.get('/', renderHomePage);// Renders the home page
 app.get('/searches/new', showForm);// Renders the search form
 app.post('/searches', createSearch);// Creates a new search to the Google Books API
 app.get('/books/:id', getABook);
+app.post('/books', saveBook);
 
 // Catch-all
 app.use('*', (request, response) => response.status(404).send('This route does not exist'));
@@ -44,7 +45,7 @@ function Book(data) {
     this.descriptions = data.description || 'No description available';
     this.image_url = (data.imageLinks) ? data.imageLinks.smallThumbnail : 'https://i.imgur.com/J5LVHEL.jpg';
     this.isbn = (data.industryIdentifiers && data.industryIdentifiers[0].identifier) ? data.industryIdentifiers[0].identifier : 'No ISBN available' ;
-    console.log(data);
+    // console.log(data);
 }
 
 // Note that .ejs file extension is not required
@@ -64,8 +65,8 @@ function showForm(request, response) {
 function createSearch(request, response) {
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
-  console.log(request.body);
-  console.log(request.body.search);
+  // console.log(request.body);
+  // console.log(request.body.search);
   
   // can we convert this to ternary?
   if (request.body.search[1] === 'title') { url += `+intitle:${request.body.search[0]}`; }
@@ -78,11 +79,22 @@ function createSearch(request, response) {
 
 function getABook(req, res){
 const sql = 'select * from books where id=$1;';
-console.log(req.params.id);
+// console.log(req.params.id);
 client.query(sql , [req.params.id])
 .then(resulte =>{
   res.render('pages/books/show', {book:resulte.rows[0]});
 })
 .catch((error) => errorHandler(error, response));
+}
 
+function saveBook(req, res){
+  const sql = `INSERT INTO books (author,title,isbn,image_url,descriptions) VALUES ($1,$2,$3,$4,$5) RETURNING id;`
+  const data = req.body;
+  // console.log(req.body);
+  const values = [data.author, data.title,data.isbn,data.image_url,data.descriptions];
+  client.query(sql ,values)
+.then(resulte =>{
+  res.redirect(`/books/${resulte.rows[0].id}`);
+})
+.catch((error) => errorHandler(error, res));
 }

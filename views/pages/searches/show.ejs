@@ -10,23 +10,17 @@
 
           <%- include('../books/detail', {book}) %>
 
+          <form action="/books" method="post">
+
+            <input type="hidden" name="title" value="<%= book.title%>">
+            <input type="hidden" name="author" value="<%= book.author%>">
+            <input type="hidden" name="isbn" value="<%= book.isbn%>">
+            <input type="hidden" name="image_url" value="<%= book.image_url%>">
+            <input type="hidden" name="descriptions" value="<%= book.descriptions%>">
+
+            <button>add to card</button>
+          </form>
         <% }) %>
-        <form action="/searches" method="post">
-          <input class="search" type="text" name="search" placeholder="Enter a title or author" required>
-          <fieldset class="check">
-            <label for="title">
-              <span>Title</span>
-              <input type="radio" name="search" value="title" required>
-            </label>
-          </fieldset>
-          <fieldset class="check">
-            <label for="author">
-              <span>Author</span>
-              <input type="radio" name="search" value="author" required>
-            </label>
-          </fieldset>
-          <button type="submit">Search the Google Books API</button>
-        </form>
     </main>
     <%- include('../../layout/footer') %>
   </body>
