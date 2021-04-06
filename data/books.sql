@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS books;
 CREATE TABLE books(
     id SERIAL PRIMARY KEY,
-    author VARCHAR(255),
-    title VARCHAR(255),
-    isbn VARCHAR(255),
+    author VARCHAR(250),
+    title VARCHAR(250),
+    isbn VARCHAR(550),
     image_url VARCHAR(500),
-    descriptions VARCHAR(2000)
+    descriptions VARCHAR(200)
 );
