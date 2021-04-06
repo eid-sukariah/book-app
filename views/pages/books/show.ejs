@@ -5,9 +5,13 @@
     <%- include('../../layout/header') %>
     <main>
         <%- include('detail',{book}) %>
+    <form action="/books/<%= book.id%>?_method=PUT" method="post">
+        <button>Update Details </button>
+    </form>
     </main>
     
     <%- include('../../layout/footer') %>
+    
 
 </body>
 </html>
