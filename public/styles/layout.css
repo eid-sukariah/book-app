@@ -10,7 +10,7 @@ main {
   height: 80vh;
 }
 
-main section {
+/* main section {
   text-align: center;
   background-color: rgb(212, 212, 212);
   margin-top: 10vh;
@@ -18,7 +18,7 @@ main section {
   padding: 5vh 8vw;
   border: inset  rgb(160, 160, 160);
   border-radius: 5px;
-}
+} */
 
 main img {
   /* width: 100%; */

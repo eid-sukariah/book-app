@@ -19,34 +19,32 @@ client.on('error', err => {console.log('unable to connect database');});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public/styles'));          // Application Middleware
-app.use(errorHandler);
 app.set('view engine', 'ejs');     // Set the view engine for server-side templating
 
 // API Routes
 app.get('/', renderHomePage);// Renders the home page
 app.get('/searches/new', showForm);// Renders the search form
 app.post('/searches', createSearch);// Creates a new search to the Google Books API
+app.get('/books/:id', getABook);
 
 // Catch-all
-app.get('*', (request, response) => response.status(404).send('This route does not exist'));
+app.use('*', (request, response) => response.status(404).send('This route does not exist'));
 
-client.connect().then(() => app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))); //listen when you connict with database
+client.connect().then(() => app.listen(PORT, () => console.log(`Listening on port: ${PORT}`)));         //listen when you connict with database
 
-function errorHandler(err, req, res, next) {
-    if (res.headersSent) {
-      return next(err);
-    }
-    res.status(500);
-    res.render('pages/error', { error: err });
+function errorHandler(err, res) {
+    res.status(500).render('pages/error', { error: 'there is wrong' });
 }
 
 // HELPER FUNCTIONS
 // Only show part of this to get students started
 function Book(data) {
     this.title = data.title || 'No title available';
-    this.author = data.authors.join(',') || 'No author available';
-    this.description = data.description || 'No description available';
-    this.image = (data.imageLinks) ? data.imageLinks.smallThumbnail : 'https://i.imgur.com/J5LVHEL.jpg';
+    this.author = (data.authors) ? data.authors.join(',') : 'No author available';
+    this.descriptions = data.description || 'No description available';
+    this.image_url = (data.imageLinks) ? data.imageLinks.smallThumbnail : 'https://i.imgur.com/J5LVHEL.jpg';
+    this.isbn = (data.industryIdentifiers && data.industryIdentifiers[0].identifier) ? data.industryIdentifiers[0].identifier : 'No ISBN available' ;
+    console.log(data);
 }
 
 // Note that .ejs file extension is not required
@@ -78,4 +76,13 @@ function createSearch(request, response) {
     .then(results => response.render('pages/searches/show', { searchResults: results }));
 }
 
+function getABook(req, res){
+const sql = 'select * from books where id=$1;';
+console.log(req.params.id);
+client.query(sql , [req.params.id])
+.then(resulte =>{
+  res.render('pages/books/show', {book:resulte.rows[0]});
+})
+.catch((error) => errorHandler(error, response));
 
+}
